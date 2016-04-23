@@ -9,6 +9,7 @@ GEM
       multi_xml (>= 0.5.2)
     json (1.8.3)
     multi_xml (0.5.5)
+    sinatra-cross_origin (0.3.2)
 
 PLATFORMS
   ruby
@@ -16,6 +17,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   google_places
+  sinatra-cross_origin (~> 0.3.1)
 
 BUNDLED WITH
    1.11.2
