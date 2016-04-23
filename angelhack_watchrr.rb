@@ -17,7 +17,7 @@ get "/search" do
 
   content_type :json
 
-  request_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:key]}&key=#{API_KEY}"
+  request_url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=#{params[:key]}&key=AIzaSyBRmc48TI0hNiirngfbuzpJ_DYQPqwsnGA"
 
   begin
     response = HTTParty.get(request_url)
