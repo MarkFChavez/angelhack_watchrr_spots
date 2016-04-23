@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/cross_origin'
 
 require 'json'
-require 'google_places'
+require 'httparty'
 
 require 'byebug'
 
@@ -13,28 +13,16 @@ configure do
 end
 
 get "/search" do
-  return "No `key` parameter is provided."
+  return "No `key` parameter is provided." unless params[:key]
 
-  ary = []
+  content_type :json
 
-  spots = client.spots_by_query(params[:key])
-  spots.map do |spot|
-    ary << build_spot(spot)
+  request_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:key]}&key=#{API_KEY}"
+
+  begin
+    response = HTTParty.get(request_url)
+    response.parsed_response["results"].to_json
+  rescue => e
+    e.message
   end
-
-  ary.to_json
-end
-
-def client
-  @client ||= GooglePlaces::Client.new(API_KEY)
-end
-
-def build_spot(spot)
-  { 
-    name: spot.name,
-    formatted_address: spot.formatted_address,
-    lat: spot.lat,
-    lng: spot.lng,
-    icon: spot.icon
-  }
 end
